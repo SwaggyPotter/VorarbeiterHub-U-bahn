@@ -3,11 +3,16 @@ import { getDatabase, ref, set } from "firebase/database";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from '../firebaseConfig';
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getDatabase();
+
+
+
+// Initialize Cloud Firestore and get a reference to the service
+
 
 @Component({
   selector: 'app-login',
@@ -18,6 +23,13 @@ const db = getDatabase();
 })
 export class LoginComponent {
   constructor() {
-    console.log('I am alive', db)
+    this.loadData()
+  }
+
+  async loadData() {
+    const db = getFirestore(app);
+    const docRef = doc(db, "cities", "SF");
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap)
   }
 }
