@@ -5,6 +5,7 @@ import { getAnalytics } from "firebase/analytics";
 import { firebaseConfig } from '../firebaseConfig';
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
+import { Router } from '@angular/router';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -22,7 +23,7 @@ const app = initializeApp(firebaseConfig);
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor() {
+  constructor(private router: Router) {
     this.loadData()
   }
 
@@ -31,5 +32,9 @@ export class LoginComponent {
     const docRef = doc(db, "cities", "SF");
     const docSnap = await getDoc(docRef);
     console.log(docSnap)
+  }
+
+  onLoginButtonClick() {
+    this.router.navigate(['/landingPage']);
   }
 }
